@@ -6,18 +6,17 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import jxl.read.biff.BiffException;
 import utils.ExcelUtils;
 
 public class JobRun {
 	
-	public static void main(String[] args) throws BiffException, IOException {
+	public static void main(String[] args) throws  IOException {
 		
 		ExcelUtils excelUtils = new ExcelUtils();
-		Map<Integer, String> postalCodeMap = excelUtils.getAllPostalCode("Locations");
+	//	Map<Integer, String> postalCodeMap = excelUtils.getAllPostalCode("Locations");
 		ArrayList<Logic> jobs = new ArrayList<Logic>();
 		
-		for(int i = 2; i <= postalCodeMap.size(); i++) {
+		//for(int i = 2; i <= postalCodeMap.size(); i++) {
 			
 		//	Logic logic = new Logic(postalCodeMap.get(i));
 			
@@ -32,4 +31,4 @@ public class JobRun {
 	}
 
  }
-}
+
