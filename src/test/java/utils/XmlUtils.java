@@ -35,7 +35,6 @@ public class XmlUtils {
 		is.setCharacterStream(new StringReader(xml.replace("&", "&amp;")));
 		doc = dBuilder.parse(is);
 		doc.getDocumentElement().normalize();
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 		NodeList nList = doc.getElementsByTagName("place");
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node nNode = nList.item(i);

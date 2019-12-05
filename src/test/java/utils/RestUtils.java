@@ -1,5 +1,6 @@
 package utils;
 
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.get;
 
@@ -31,6 +32,7 @@ public class RestUtils {
 		xmlutils = new XmlUtils();
 		formedURLLatAndLon = URLPostalCode.replace("#ADDRESSDETAILS", "1").replace("#LIMIT", "10")
 				.replace("#POSTALCODE", postalCode);
+		RestAssured.useRelaxedHTTPSValidation();
 		Response response = null;
 		try {
 			response = get(formedURLLatAndLon);

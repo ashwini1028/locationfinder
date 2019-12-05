@@ -47,7 +47,7 @@ public class ExcelUtils {
 	int tot_testData_rows;
 	int tot_test_steps_cols;
 	String testID;
-	private String filePath = "C:\\Users\\708610\\Documents\\Macys\\locationfinder\\postalcodes.xls";
+	private String filePath = "./postalcodes.xls";
 
 
 

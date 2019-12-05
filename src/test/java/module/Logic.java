@@ -13,7 +13,7 @@ public class Logic extends XmlUtils {
 
 	RestUtils restutils;
 	ExcelUtils excelUtils;
-	private String filePath = "C:\\Users\\708610\\Documents\\Macys\\locationfinder\\src\\test\\resources\\TestData.csv";
+	private String filePath = "./src\\test\\resources\\TestData.csv";
 
 	Map<String, ArrayList<String>> addressMap = null;
 
@@ -51,9 +51,7 @@ public class Logic extends XmlUtils {
 					fw.append(",");
 					fw.append("\"" + addressArray.get(3) + "\"");
 					fw.append(",");
-					fw.append("\"" + addressArray.get(4) + "\"");
-					fw.append(",");
-					fw.append("\"" + addressArray.get(5) + "\"");
+					fw.append("\"" + addressArray.get(4) +","+ addressArray.get(5) + "\"");
 					fw.flush();
 				}
 
@@ -61,8 +59,6 @@ public class Logic extends XmlUtils {
 
 				fw.append("\n");
 				fw.append("\"" + postalCodeMap.get(i) + "\"");
-				fw.append(",");
-				fw.append("No Record");
 				fw.append(",");
 				fw.append("No Record");
 				fw.append(",");
