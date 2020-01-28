@@ -1,5 +1,6 @@
 package module;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,67 +11,79 @@ import utils.ExcelUtils;
 import utils.RestUtils;
 import utils.XmlUtils;
 
-public class ThreadLogic extends XmlUtils{
+public class ThreadLogic extends XmlUtils  implements Runnable{
 	
 	RestUtils restutils;
 	ExcelUtils excelUtils;
-	private String filePath = "C:\\Users\\708610\\Documents\\Macys\\locationfinder\\src\\test\\resources\\TestData.csv";
+	String postCode;
+	FileWriter fw;
+	private String file = "TestData.csv";
+
+	
+	public ThreadLogic(String postCode){
+
+		this.postCode = postCode;
+
+	}
 
 
-
-	public void csvWriter() throws BiffException, IOException {
-		excelUtils = new ExcelUtils();
+	@Override
+	public void run() {
 		restutils = new RestUtils();
-		Map<Integer, String> postalCodeMap = excelUtils.getAllPostalCode("Sheet1");
 
-		FileWriter fw = new FileWriter(filePath);
-		String header = "\"PostalCode\",\"AddressLine\",\"State\",\"Country\",\"Country_Code\",\"Lat/Lon\"";
-		fw.append(header);
 
-		for (int i = 2; i <= postalCodeMap.size() + 1; i++) {
-			try {
-				ArrayList<String> addressArray = restutils.fetchAddressByLatNLon(postalCodeMap.get(i));
-				if (addressArray.size() >= 1) {
-					
-					System.out.println(postalCodeMap.get(i) + "=" + addressArray);
-					
+		try {
+			File f = new File(file);
+			fw = new FileWriter(f.getAbsoluteFile(),true);
+			String header = "\"PostalCode\",\"AddressLine\",\"State\",\"Country\",\"Country_Code\",\"Lat/Lon\"";
+			//fw.append(header);
+
+				try {
+					ArrayList<String> addressArray = restutils.fetchAddressByLatNLon(postCode);
+					if (addressArray.size() >= 1) {
+						
+						System.out.println(postCode + "=" + addressArray);
+						
+						fw.append("\n");
+						fw.append("\"" + postCode + "\"");
+						fw.append(",");
+						fw.append("\"" + addressArray.get(0) + "\"");
+						fw.append(",");
+						fw.append("\"" + addressArray.get(1) + "\"");
+						fw.append(",");
+						fw.append("\"" + addressArray.get(2) + "\"");
+						fw.append(",");
+						fw.append("\"" + addressArray.get(3) + "\"");
+						fw.append(",");
+						fw.append("\"" + addressArray.get(4) +","+ addressArray.get(5) + "\"");
+						fw.flush();
+					}
+
+				} catch (Exception e) {
+
 					fw.append("\n");
-					fw.append("\"" + postalCodeMap.get(i) + "\"");
+					fw.append("\"" + postCode + "\"");
 					fw.append(",");
-					fw.append("\"" + addressArray.get(0) + "\"");
+					fw.append("No Record");
 					fw.append(",");
-					fw.append("\"" + addressArray.get(1) + "\"");
+					fw.append("No Record");
 					fw.append(",");
-					fw.append("\"" + addressArray.get(2) + "\"");
+					fw.append("No Record");
 					fw.append(",");
-					fw.append("\"" + addressArray.get(3) + "\"");
+					fw.append("No Record");
 					fw.append(",");
-					fw.append("\"" + latAndLon.get(postalCodeMap.get(i) + "Lattitude") + ","
-							+ latAndLon.get(postalCodeMap.get(i) + "Longitude") + "\"");
+					fw.append("No Record");
 					fw.flush();
 				}
 
-			} catch (Exception e) {
-
-				fw.append("\n");
-				fw.append("\"" + postalCodeMap.get(i) + "\"");
-				fw.append(",");
-				fw.append("No Record");
-				fw.append(",");
-				fw.append("No Record");
-				fw.append(",");
-				fw.append("No Record");
-				fw.append(",");
-				fw.append("No Record");
-				fw.append(",");
-				fw.append("No Record");
-				fw.flush();
-			}
-
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		fw.close();
-
 	}
+
+
 
 }

@@ -22,7 +22,7 @@ public class XmlUtils {
 	DocumentBuilder dBuilder;
 	InputSource is;
 	Document doc;
-	public static Map<String, String> latAndLon = null;
+	public static Map<String, String> latAndLon;
 	ArrayList<String> addressArray;
 
 	public Map<String, String> fetchByCountry(String xml, String postalCode, String countryCode)
@@ -59,7 +59,7 @@ public class XmlUtils {
 		return latAndLon;
 	}
 
-	public ArrayList<String> fetchByLatnLon(String xml, String postalCode) throws ParserConfigurationException, SAXException, IOException {
+	public ArrayList<String> fetchByLatnLon(String xml, String postalCode, String lat, String lon) throws ParserConfigurationException, SAXException, IOException {
 
 		addressArray = new ArrayList<String>();
 
@@ -97,8 +97,10 @@ public class XmlUtils {
 				addressArray.add(state);
 				addressArray.add(country);
 				addressArray.add(country_code);
-				addressArray.add(latAndLon.get(postalCode + "Lattitude"));
-				addressArray.add(latAndLon.get(postalCode + "Longitude"));
+				//addressArray.add(latAndLon.get(postalCode + "Lattitude"));
+				//addressArray.add(latAndLon.get(postalCode + "Longitude"));
+				addressArray.add(lat);
+				addressArray.add(lon);
 			
 
 		}

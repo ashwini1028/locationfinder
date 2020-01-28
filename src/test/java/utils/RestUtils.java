@@ -1,14 +1,11 @@
 package utils;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.get;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -32,7 +29,7 @@ public class RestUtils {
 		xmlutils = new XmlUtils();
 		formedURLLatAndLon = URLPostalCode.replace("#ADDRESSDETAILS", "1").replace("#LIMIT", "10")
 				.replace("#POSTALCODE", postalCode);
-		RestAssured.useRelaxedHTTPSValidation();
+		//RestAssured.useRelaxedHTTPSValidation();
 		Response response = null;
 		try {
 			response = get(formedURLLatAndLon);
@@ -48,11 +45,11 @@ public class RestUtils {
 				formedURLAddress = URLAddress.replace("#LAT", latAndLon.get(postalCode + "Lattitude")).replace("#LON",
 						latAndLon.get(postalCode + "Longitude"));
 			} catch (Exception e) {
-				e.printStackTrace();
+			
 			}
 			Response response1 = get(formedURLAddress);
 			resAddress = response1.asString();
-			addressArray = xmlutils.fetchByLatnLon(resAddress,postalCode);
+			addressArray = xmlutils.fetchByLatnLon(resAddress,postalCode,latAndLon.get(postalCode + "Lattitude"),latAndLon.get(postalCode + "Longitude"));
 
 		}
 		return addressArray;
